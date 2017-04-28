@@ -1,0 +1,27 @@
+{
+  "name": "cunyhack",
+  "version": "1.0.0",
+  "description": " text analysis",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kevin E. Cybura , Jack C, Maria C. Volpe, Karishma Muni, Ariel Lim",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevinCybura/CUNYHACK.git"
+  },
+  "keywords": [
+    "Text",
+    "analysis"
+  ],
+  "bugs": {
+    "url": "https://github.com/KevinCybura/CUNYHACK/issues"
+  },
+  "homepage": "https://github.com/KevinCybura/CUNYHACK#readme"
+}
