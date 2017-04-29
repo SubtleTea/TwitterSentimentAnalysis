@@ -1,36 +1,40 @@
 const http = require('http');
+const express = require('express');
+const FromTwitter = require('./FromTwitter');
 const twit = require('twit');
 const fs = require('fs');
+const config = require('./config');
+let app = express();
 
 
-// this is out twitter authenication
-let T = new twit({
-  consumer_key: 'EFCn2Uh2VflIdI8VOpojivoTk',
-  consumer_secret: 'SUpnXWc4K9ZqkUA3SA8vtw8A1qVHi2GyNZkAfY73TpSx66Kypl',
-  access_token: '858111776373841924-RuWJHlDDogG5ByovtUheXtdNbbrWCcg',
-  access_token_secret: 'a8u7Zv042wg0apmElTtt9SfTwgBV9GJC0LEHxCJPAnYuW',
+
+//let x = fs.readFileSync('tweets.json','utf8');
+app.listen(3000, () => {
+  console.log('Listening on port 3000');
 });
+let T = new twit(config);
+x = FromTwitter.SearchTerms('apple', T);
+
+// x = toJson.toTweetJson(y);
+// console.log(x);
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+// this is out twitter authenication
 
 
-// this piece of code gets a tweet that contains banana  and count of them in this cas s1
-T.get('search/tweets', { q: 'banana since:2011-07-11', count: 1 }, function(err, data, response) {
+
+
+
+
+
+
+//this piece of code gets a tweet that contains banana  and count of them in this cas s1
+T.get('search/tweets', {
+  q: 'CUNY since:2011-07-11',
+  count: 1
+}, function(err, data, response) {
   let x = JSON.stringify(data);
-  fs.writeFile('tweets.txt',x);
-})
-
-
-const port = 3000;
-const requestHandler = (request, response) => {
-  console.log(request.url)
-  response.end('Hello Node.js Server!')
-}
-
-const server = http.createServer(requestHandler)
-
-server.listen(port, (err) => {
-  if (err) {
-    return console.log('something bad happened', err)
-  }
-
-  console.log(`server is listening on ${port}`)
+  fs.writeFile('tweets.json', x);
 })
