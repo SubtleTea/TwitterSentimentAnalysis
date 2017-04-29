@@ -8,20 +8,19 @@ let app = express();
 
 
 
-//let x = fs.readFileSync('tweets.json','utf8');
+
 app.listen(3000, () => {
   console.log('Listening on port 3000');
 });
 let T = new twit(config);
-x = FromTwitter.SearchTerms('apple', T);
+FromTwitter.SearchTerms('cuny', T);
 
-// x = toJson.toTweetJson(y);
-// console.log(x);
+
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-// this is out twitter authenication
+
 
 
 
