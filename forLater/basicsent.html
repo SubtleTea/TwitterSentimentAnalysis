@@ -1,0 +1,101 @@
+<!doctype html>
+
+<html>
+	<head>
+	</head>
+		<title> Sentiment Analysis </title>
+		<script src = "http://d3js.org/d3.v3.min.js"></script>
+
+<body>
+
+    <script>
+    let sent = 2;
+    let n = 15; //scaling
+
+    let xscale = d3.scale.linear()
+        .domain([-15,15])   //Each value is worth 10 pixels
+        .range([0,500]);
+
+    let canvas = d3.select("body")
+        .append("svg")
+        .attr("width",535)
+        .attr("height",200)
+ 
+    let background = d3.select("svg")
+        .append("rect")
+        .attr("width",535)
+        .attr("height",200)
+        .attr("fill","lightblue");
+
+    let axis = d3.svg.axis()
+        .ticks(8)
+        .scale(xscale);
+
+    let mainaxis = canvas.append("g")
+        .call(axis)
+        .attr("transform","translate(17.5,170)");
+
+    let horizontalline = canvas.append("line")
+        .attr("x1",267.5)
+        .attr("y1",10)
+        .attr("x2",267.5)
+        .attr("y2",170)
+        .attr("stroke","black")
+        .attr("stroke-width",2)
+        
+    if(sent > 0){
+        let posbar = canvas.append("g")
+            .append("rect")
+            .attr("width", sent*n)
+            .attr("height", 80)
+            .attr("fill","darkblue")
+            .attr("transform","translate(268,60)")
+
+            .append("g")
+        let rightcurtain = canvas.append("g")
+            .append("rect")
+            .attr("width", sent*n)
+            .attr("height", 80)
+            .attr("fill","lightblue")
+            .attr("x",269)
+            .attr("y",60);
+        rightcurtain.transition()
+            .attr("x",269+sent*n)
+            .duration(3000);
+    }
+    else if(sent < 0){
+        let posbar = canvas.append("g")
+            .append("rect")
+            .attr("width", -1*sent*n)
+            .attr("height", 80)
+            .attr("fill","darkred")
+            .attr("y",60)
+            .attr("x", 267+sent*n)
+
+            .append("g")
+        let leftcurtain = canvas.append("g")
+            .append("rect")
+            .attr("width", -1*sent*n)
+            .attr("height", 80)
+            .attr("fill","lightblue")
+            .attr("x",267+sent*n)
+            .attr("y",60);
+
+        leftcurtain.transition()
+            .attr("x",sent*n)
+            .duration(3000);
+
+    }
+    else{
+        //Do nothing
+    }
+
+    
+
+
+    </script>
+
+
+
+</body>
+</html>

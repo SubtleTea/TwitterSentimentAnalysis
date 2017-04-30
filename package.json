@@ -9,11 +9,9 @@
   "author": "Kevin E. Cybura , Jack C, Maria C. Volpe, Karishma Muni, Ariel Lim",
   "license": "ISC",
   "dependencies": {
-
     "express": "^4.15.2",
-
+    "socket.io": "^1.7.3",
     "twit": "^2.2.5"
-
   },
   "devDependencies": {},
   "repository": {
