@@ -9,6 +9,7 @@ const express = require('express');
 let app = express();
 app.listen(3000);
 let tweets;
+
 function SearchTermData (Searchterm, Count) {
 Twitter.get('search/tweets', {
   q: Searchterm,
@@ -27,10 +28,12 @@ Twitter.get('search/tweets', {
     let sum = [];
     let max = 0;
     let min = 0;
+    let average = 0;
     for (let i = 0; i < Passing.length; i++){
       tweets.push(Passing[i].text);
       sentiment.push(analysis.basicSentiment(tweets[i], analysis.getAfinn()));
       sum[i] = sentiment[i].sum;
+      average += sum[i];
       if (max < sum[i]){
         max = sum[i];
       }
@@ -38,7 +41,9 @@ Twitter.get('search/tweets', {
         min = sum[i];
       }
     }
-    console.log(max + ' '+ min);
+    //maybe return this value to codeproj2.html?
+    average = average/Passing.length;
+    //console.log(max + ' '+ min);
 });
 }
 
