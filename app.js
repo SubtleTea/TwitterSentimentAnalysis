@@ -25,12 +25,25 @@ Twitter.get('search/tweets', {
 
     let sentiment = [];
     let tweets = [];
+    let dates = [];
     let sum = [];
+    let dailyPercentChange = [];
+    let minPercentIndex = 0;
+    let maxPercentIndex = 0;
+    let drasticPercentIndex = 0;
+    let minPercentIndex2 = 0;
+    let maxPercentIndex2 = 0;
     let max = 0;
     let min = 0;
     let average = 0;
+
+    /*/
+    //create tweetInfo object to pass to codeproj2?
+    let tweetInfo = {dates[], sum[], dailyPercentChange[], minPercentIndex, maxPercentIndex, minPercentIndex2, maxPercentIndex2, drasticPercentIndex, max, min, average};
+    /*/
     for (let i = 0; i < Passing.length; i++){
       tweets.push(Passing[i].text);
+      dates.push(Passing[i].date);
       sentiment.push(analysis.basicSentiment(tweets[i], analysis.getAfinn()));
       sum[i] = sentiment[i].sum;
       average += sum[i];
@@ -41,11 +54,81 @@ Twitter.get('search/tweets', {
         min = sum[i];
       }
     }
+    let minChange = Number.MAX_NUMBER;
+    let maxChange = - (Number.MAX_NUMBER);
+    for (let i = 0; i < Passing.length; i++){
+      let change = ((sum[i+1]-sum[i])/(sum[i]))*100;
+      dailyPercentChange.push(change);
+      if (change < minChange){
+        minChange = change;
+        minPercentIndex = i;
+      }
+      else if (change == minChange){
+        minPercentIndex2 = i;
+      }
+      if (change > maxChange){
+        maxChange = change;
+        maxPercentIndex = i;
+      }
+      else if (change == maxChange){
+        maxPercentIndex2 = i;
+      }
+    }
+    if(Math.abs(dailyPercentChange[maxPercentIndex]) > Math.abs(dailyPercentChange[minPercentIndex])){
+        drasticPercentIndex = maxPercentIndex;
+    }
+    else if (Math.abs(dailyPercentChange[maxPercentIndex]) < Math.abs(dailyPercentChange[minPercentIndex])){
+        drasticPercentIndex = minPercentIndex;
+    }
+    //usage of maxPercentIndex/minPercentIndex/drasticPercentIndex: use paired with dates[i]
+    //(and possibly sum[i]) will tell us the day with a sudden shift in public opinion
+    //only pass max/minPercentIndex2 if they have a value greater than 0
+    //maybe make an object containing the above
     //maybe return this value to codeproj2.html?
     average = average/Passing.length;
     //console.log(max + ' '+ min);
 });
 }
+
+//extract month from date
+//call function w/ date[i]
+//dates = date.split(' ');
+//call diff function with (dates[1])
+/*/switch (month){
+case 'Jan':
+      month = parseInt(1);
+      break;
+case 'Feb':
+      month = parseInt(2);
+      break;
+case 'Mar':
+      month = parseInt(3);
+      break;
+case 'Apr':
+      month = parseInt(4);
+      break;
+case 'May':
+      month = parseInt(5);
+      break;
+case 'Jun':
+      month = parseInt(6);
+      break;
+case 'Jul':
+      month = parseInt(7);
+      break;
+case 'Aug':
+      month = parseInt(8);
+      break;
+case 'Sep':
+      month = parseInt(9);
+      break;
+case 'Nov':
+      month = parseInt(10);
+      break;
+case 'Dec':
+      month = parseInt(10);
+}
+/*/
 
  function DisplayTwitterinfo(tweet) {
    //console.log(tweet.user.name);
