@@ -1,14 +1,14 @@
 
-var twit = require('twit');
-var config = require('./config');
-var Twitter = new twit(config);
+let twit = require('twit');
+let config = require('./config');
+let Twitter = new twit(config);
 let analysis = require('./analysis');
 
 const https = require('https');
 const express = require('express');
 let app = express();
 app.listen(3000);
-var tweets;
+let tweets;
 function SearchTermData (Searchterm, Count) {
 Twitter.get('search/tweets', {
   q: Searchterm,
@@ -17,14 +17,9 @@ Twitter.get('search/tweets', {
   result_type: 'recent',
   lang: 'en'},
   function searchdata(err, data, response) {
-    // let y = data.statuses.forEach((x)=>{
-    //    return PassTwitterInfo(x);
-    // });
-    var Passing = []
-    for (var i = 0;i < Count; i++) {
-//      DisplayTwitterinfo(data.statuses[i]);
+    let Passing = []
+    for (let i = 0;i < Count; i++) {
       Passing.push(PassTwitterInfo(data.statuses[i]));
-      //console.log(Passing)
     }
 
     let sentiment = [];
@@ -35,9 +30,7 @@ Twitter.get('search/tweets', {
     for (let i = 0; i < Passing.length; i++){
       tweets.push(Passing[i].text);
       sentiment.push(analysis.basicSentiment(tweets[i], analysis.getAfinn()));
-      //console.log(sentiment[i].sum);
       sum[i] = sentiment[i].sum;
-      //console.log(sentiment[i].max);
       if (max < sum[i]){
         max = sum[i];
       }
@@ -46,18 +39,11 @@ Twitter.get('search/tweets', {
       }
     }
     console.log(max + ' '+ min);
-
-    //let sentiment = analysis.basicSentiment(tweets[i], analysis.getAfinn());
-    //console.log(sentiment.sum);
-
-
-    // console.log(data.statuses[2].text);
-    // console.log(data.statuses.length)
 });
 }
 
  function DisplayTwitterinfo(tweet) {
-//   console.log(tweet.user.name);
+   //console.log(tweet.user.name);
    //console.log(tweet.user.screen_name);
    //console.log(tweet.user.id_str);
    console.log(tweet.text);
@@ -100,5 +86,5 @@ Twitter.get('search/tweets', {
   //  console.log(PassVariable);
    return PassVariable;
  }
-//
-SearchTermData('happy', 50);
+
+SearchTermData('cuny', 50);

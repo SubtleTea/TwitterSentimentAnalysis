@@ -1,5 +1,4 @@
 let fs = require('fs');
-//let json = require('FILENAME');
 module.exports = {
 
 
@@ -10,7 +9,6 @@ getAfinn: function(){
 
   words = fs.readFileSync('AFINN-111.txt', 'utf8');
   buffer = words.split(/[\t\n]+/);
-
 
   function wordval(fillword, fillvalue){
     this.word = fillword;
@@ -46,10 +44,8 @@ basicSentiment : (tweet, afinn) => {
     input[i] = input[i].replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '');
     input[i].replace(/[^\w\s!?]/g,'');
     input[i].replace (/[.,?!\s,]/g, " ");
-    //input[i].replace(';','');
-  }
-  //console.log(input);
 
+  }
 
   for (let i=0; i < input.length; i++){
     for (let j=0; j < afinn.length; j++){
